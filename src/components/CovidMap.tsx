@@ -6,6 +6,12 @@ import { CountryData, useGetAllCountries } from "../hooks/covidCountries";
 const CovidMap: React.FC = () => {
   const { data, error } = useGetAllCountries();
 
+  if (error) {
+    return (
+      <div className="text-red-500">Error loading data: {error.message}</div>
+    );
+  }
+
   return (
     <MapContainer
       center={[0, 0]}
@@ -25,7 +31,12 @@ const CovidMap: React.FC = () => {
           <Popup className="">
             <div className="bg-black bg-opacity-80 text-white p-2 rounded-lg">
               <div className="flex flex-col justify-center items-center gap-3">
-                <img src={country.countryInfo.flag} alt={country.countryInfo.iso3} width={20} height={20}/>
+                <img
+                  src={country.countryInfo.flag}
+                  alt={country.countryInfo.iso3}
+                  width={20}
+                  height={20}
+                />
                 <h3 className="text-white font-bold">{country.country}</h3>
               </div>
               <p className="mb-1">Active cases: {country.active}</p>

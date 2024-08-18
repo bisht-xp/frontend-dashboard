@@ -19,11 +19,11 @@ interface ChartData {
   recovered: number;
 }
 
-interface CovidData {
-  cases: { [date: string]: number };
-  deaths: { [date: string]: number };
-  recovered: { [date: string]: number };
-}
+// interface CovidData {
+//   cases: { [date: string]: number };
+//   deaths: { [date: string]: number };
+//   recovered: { [date: string]: number };
+// }
 
 type DataType = "all" | "cases" | "deaths" | "recovered";
 
