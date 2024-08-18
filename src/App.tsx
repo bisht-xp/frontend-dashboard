@@ -1,7 +1,14 @@
+import { Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import Maps from "./pages/Maps";
+import Charts from "./pages/Charts";
+
 export default function App() {
   return (
-    <h1 className="text-3xl font-bold text-center">
-      Hello world!
-    </h1>
-  )
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/maps" element={<Maps />} />
+      <Route path="/charts" element={<Charts />} />
+    </Routes>
+  );
 }
