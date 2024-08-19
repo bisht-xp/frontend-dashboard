@@ -20,33 +20,45 @@ interface Contact {
 }
 
 const Home: React.FC = () => {
+  // State to manage the visibility of the modal
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // State to manage the selected contact for editing or viewing
   const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
+
+  // Accessing contacts from the Redux store
   const { contacts } = useSelector((state: RootState) => state.contacts);
+
+  // Dispatch function to send actions to the Redux store
   const dispatch = useDispatch();
 
+  // Handle card click event to edit a contact
   const handleCardClick = (contact: Contact) => {
     setSelectedContact(contact);
     setIsModalOpen(true);
   };
 
+  // Handle the creation of a new contact
   const handleCreateContact = () => {
     setSelectedContact(null);
     setIsModalOpen(true);
   };
 
+  // Save a new contact to the Redux store
   const handleSave = (userData: Contact) => {
     dispatch(addContact(userData));
     setIsModalOpen(false);
     toast.success("Successfully created!!");
   };
 
+  // Update an existing contact in the Redux store
   const handleUpdate = (userData: Contact) => {
     dispatch(updateContact(userData));
     setIsModalOpen(false);
     toast.success("Successfully updated!!");
   };
 
+  // Delete a contact from the Redux store
   const handleDelete = (userData: Contact) => {
     dispatch(deleteContact(userData.id));
     setIsModalOpen(false);
@@ -103,7 +115,7 @@ const Home: React.FC = () => {
           </div>
         )}
       </div>
-
+      {/* Modal for creating or editing a contact */}
       {isModalOpen && (
         <div className="fixed z-40 inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center duration-300 ease-out">
           <ClickOutside

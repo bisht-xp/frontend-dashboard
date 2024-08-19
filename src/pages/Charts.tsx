@@ -13,6 +13,7 @@ const Charts = () => {
         </p>
       </div>
       <div className="flex flex-col justify-center items-center">
+        {/* Chart component with a suspense fallback for loading state */}
         <Suspense fallback={<p>Loading...</p>}>
           <CovidChart />
         </Suspense>
