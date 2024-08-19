@@ -1,18 +1,38 @@
 import React from "react";
+import L from "leaflet";
+import icon from "leaflet/dist/images/marker-icon.png";
+import iconShadow from "leaflet/dist/images/marker-shadow.png";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { CountryData, useGetAllCountries } from "../hooks/covidCountries";
 
+let DefaultIcon = L.icon({
+  iconUrl: icon,
+  shadowUrl: iconShadow,
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  tooltipAnchor: [16, -28],
+  shadowSize: [41, 41],
+});
+
+L.Marker.prototype.options.icon = DefaultIcon;
+
 const CovidMap: React.FC = () => {
-  const { data, error } = useGetAllCountries();
+  const { data, isLoading, error } = useGetAllCountries();
 
   if (error) {
     return (
-      <div className="text-red-500">Error loading data: {error.message}</div>
+      <div className="w-full h-[50vh] flex justify-center items-center">
+        <p className="text-red-500">Error loading data: {error.message}</p>
+      </div>
     );
   }
-
-  return (
+  return isLoading ? (
+    <div className="w-full h-[50vh] flex justify-center items-center">
+      <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-white border-r-transparent "></div>
+    </div>
+  ) : (
     <MapContainer
       center={[0, 0]}
       zoom={2}
@@ -27,6 +47,7 @@ const CovidMap: React.FC = () => {
         <Marker
           key={country.country}
           position={[country.countryInfo.lat, country.countryInfo.long]}
+          icon={DefaultIcon}
         >
           <Popup className="">
             <div className="bg-black bg-opacity-80 text-white p-2 rounded-lg">
