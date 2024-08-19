@@ -55,6 +55,11 @@ Start the server
 - Leaflet for maps
 - react-leaflet
 
+## Data Sources
+
+- **COVID-19 Historical Data for Charts**: The application uses the endpoint `[https://disease.sh/v3/covid-19/historical/all?lastdays=all](https://disease.sh/v3/covid-19/historical/all?lastdays=all)` to fetch historical COVID-19 data. This data is used to populate charts that display the progression of cases over time.
+  
+- **COVID-19 Country Data for Map**: The application uses the endpoint `[https://disease.sh/v3/covid-19/countries](https://disease.sh/v3/covid-19/countries)` to fetch current COVID-19 data by country. This data is used to display information on the map, showing the impact of the pandemic across different regions.
 
 ## Features
 - **Zod for Form Validation**: Ensures that all user inputs are validated against defined schemas, providing robust form handling and error reporting.
