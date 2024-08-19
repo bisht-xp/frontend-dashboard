@@ -65,9 +65,9 @@ const ContactModal: React.FC<ContactModalProps> = ({
   };
 
   return (
-    <div className="w-full bg-white rounded-lg shadow-md z-10 p-6 sm:p-10 duration-300 ease-out">
+    <div className="w-full bg-[#02090e] rounded-lg shadow-md z-10 p-6 sm:p-10 transition-all duration-300 ease-out">
       <div className="relative flex items-center justify-center mb-8 w-full">
-        <h2 className="text-2xl sm:text-3xl font-semibold text-gray-900">
+        <h2 className="text-2xl sm:text-3xl font-semibold text-[#E0DEDA]">
           {mode === "create" ? "Create Contact" : "Edit Contact"}
         </h2>
       </div>
@@ -106,7 +106,7 @@ const ContactModal: React.FC<ContactModalProps> = ({
         <div className="flex justify-center gap-4">
           <button
             onClick={handleSave}
-            className="bg-blue-500 hover:bg-blue-600 text-white rounded py-2 px-6 transition duration-300"
+            className="bg-black hover:bg-gray-900 text-white rounded py-2 px-6 transition duration-300 border-white border"
           >
             {mode === "create" ? "Create" : "Save Changes"}
           </button>
@@ -115,7 +115,7 @@ const ContactModal: React.FC<ContactModalProps> = ({
               onClick={() => {
                 onDelete(userData);
               }}
-              className="bg-[#F05656] hover:bg-red-600 text-white rounded py-2 px-6 transition duration-300"
+              className="bg-[#F05656] hover:bg-red-600 border-white/80 border text-white rounded py-2 px-6 transition duration-300"
             >
               Delete
             </button>
@@ -157,7 +157,7 @@ const InputField: React.FC<InputFieldProps> = ({
 
   return (
     <div className="mb-4">
-      <label htmlFor={name} className="block text-gray-800 mb-2">
+      <label htmlFor={name} className="block text-[#F9F9F9]/80 mb-2">
         {label}
       </label>
       <div className="flex items-center px-3 py-2 gap-2 bg-[#F9F9F9] rounded">
