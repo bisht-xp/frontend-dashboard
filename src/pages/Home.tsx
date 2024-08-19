@@ -58,13 +58,16 @@ const Home: React.FC = () => {
       <div className="md:pb-10">
         <div className="max-w-[540px] mx-auto mb-10">
           <h2 className="text-center text-2xl md:text-[54px] md:leading-[60px] font-bold text-[#E0DEDA]">
-            Want to create new contacts
+            Streamline Your Contact Management
           </h2>
+          <p className="text-white/50 text-sm md:text-xl text-center mt-5">
+            Effortlessly add, edit, and organize your professional network
+          </p>
         </div>
         <div className="flex justify-center items-center">
           <button
             onClick={handleCreateContact}
-            className="bg-black text-white text-lg border-white border px-4 py-2 rounded-lg inline-flex items-center font-medium justify-center hover:bg-gray-900 transition"
+            className="bg-black text-white text-lg border-white border px-4 py-2 rounded-lg inline-flex items-center font-medium justify-center hover:bg-gray-900 transition duration-300"
           >
             Create Contact
           </button>
@@ -84,17 +87,19 @@ const Home: React.FC = () => {
             ))}
           </div>
         ) : (
-          <div className="w-full flex-col md:w-[540px] mx-auto mt-8 justify-center items-center">
-            <div className="flex justify-center mt-4">
-              <MdCancel className="text-white" size="40px" />
+          <div className="w-full md:w-[540px] mx-auto mt-8 ">
+            <div className="flex flex-col justify-center items-center">
+              <div className="flex justify-center mt-4">
+                <MdCancel className="text-white" size="40px" />
+              </div>
+              <p className="text-center p-3 text-[17px] text-[#E0DEDA]">
+                No Contact Found
+                <br />
+                <span className="text-[#98948C]">
+                  Please add contact from create contact button.
+                </span>
+              </p>
             </div>
-            <p className="text-center p-3 text-[17px] text-[#E0DEDA]">
-              No Contact Found
-              <br />
-              <span className="text-[#98948C]">
-                Please add contact from create contact button.
-              </span>
-            </p>
           </div>
         )}
       </div>
