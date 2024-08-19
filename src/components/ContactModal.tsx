@@ -49,6 +49,7 @@ const ContactModal: React.FC<ContactModalProps> = ({
     setUserData((prevData) => ({ ...prevData, [name]: value }));
   };
 
+  // Handle save button click, validate data and call onSave and Validate user data using schema
   const handleSave = () => {
     const parsedData = contactSchema.safeParse(userData);
     if (parsedData.success) {
@@ -73,6 +74,7 @@ const ContactModal: React.FC<ContactModalProps> = ({
       </div>
       <div className="flex flex-col gap-6">
         <div className="w-full rounded-md flex flex-col gap-2">
+          {/* Form fields for full name, phone, and email */}
           <InputField
             name="fullName"
             label="Full Name"
@@ -149,6 +151,7 @@ const InputField: React.FC<InputFieldProps> = ({
 }) => {
   const [value, setValue] = useState(initialValue);
 
+  // Handle input changes and update value and parent state
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
     setValue(newValue);
@@ -172,6 +175,7 @@ const InputField: React.FC<InputFieldProps> = ({
           onChange={handleChange}
         />
       </div>
+      {/* Error message display */}
       {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
     </div>
   );

@@ -13,36 +13,46 @@ const ClickOutside: React.FC<Props> = ({
   onClick,
   className,
 }) => {
+  // Create a ref to track the wrapper div
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Function to handle click events
     const handleClickListener = (event: MouseEvent) => {
-      let clickedInside: null | boolean = false;
-      if (exceptionRef) {
-        clickedInside =
-          (wrapperRef.current &&
-            wrapperRef.current.contains(event.target as Node)) ||
-          (exceptionRef.current && exceptionRef.current === event.target) ||
-          (exceptionRef.current &&
-            exceptionRef.current.contains(event.target as Node));
-      } else {
-        clickedInside =
-          wrapperRef.current &&
-          wrapperRef.current.contains(event.target as Node);
+      let clickedInside = false;
+
+      // Check if the click is within the wrapper or the exception element (if provided)
+      if (
+        wrapperRef.current &&
+        wrapperRef.current.contains(event.target as Node)
+      ) {
+        clickedInside = true;
+      } else if (
+        exceptionRef?.current &&
+        (exceptionRef.current === event.target ||
+          exceptionRef.current.contains(event.target as Node))
+      ) {
+        clickedInside = true;
       }
 
-      if (!clickedInside) onClick();
+      // If the click is outside, trigger the onClick callback
+      if (!clickedInside) {
+        onClick();
+      }
     };
 
+    // Attach the event listener to detect outside clicks
     document.addEventListener("mousedown", handleClickListener);
 
+    // Clean up the event listener on component unmount
     return () => {
       document.removeEventListener("mousedown", handleClickListener);
     };
   }, [exceptionRef, onClick]);
 
   return (
-    <div ref={wrapperRef} className={`${className || ""}`}>
+    // Apply the wrapper ref and optional class name to the div
+    <div ref={wrapperRef} className={className || ""}>
       {children}
     </div>
   );

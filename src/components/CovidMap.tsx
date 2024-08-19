@@ -19,8 +19,10 @@ let DefaultIcon = L.icon({
 L.Marker.prototype.options.icon = DefaultIcon;
 
 const CovidMap: React.FC = () => {
+  // Fetching data for all countries including COVID-19 statistics using react query
   const { data, isLoading, error } = useGetAllCountries();
 
+  // Handling errors if data fails to load
   if (error) {
     return (
       <div className="w-full h-[50vh] flex justify-center items-center">
@@ -33,6 +35,7 @@ const CovidMap: React.FC = () => {
       <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-white border-r-transparent "></div>
     </div>
   ) : (
+    // MapContainer to render the map
     <MapContainer
       center={[0, 0]}
       zoom={2}

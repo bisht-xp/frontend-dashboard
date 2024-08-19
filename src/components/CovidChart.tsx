@@ -22,6 +22,7 @@ interface ChartData {
 type DataType = "all" | "cases" | "deaths" | "recovered";
 
 const CovidChart: React.FC = () => {
+  // Fetching COVID-19 chart data, along with loading and error states using react query
   const { data, isLoading, error } = useGetChartsData();
   const [selectedDataType, setSelectedDataType] = useState<DataType>("all");
 
@@ -31,6 +32,7 @@ const CovidChart: React.FC = () => {
     recovered: "#36A2EB",
   };
 
+  // Function to format the fetched data into a yearly aggregated format
   const formatData = (): ChartData[] => {
     if (!data || !data.cases || !data.deaths || !data.recovered) return [];
 
@@ -51,6 +53,7 @@ const CovidChart: React.FC = () => {
 
   const chartData = formatData();
 
+  // Function to format Y-axis labels with compact notation (e.g., "1.5M" for 1,500,000)
   const formatYAxis = (value: number): string => {
     return new Intl.NumberFormat("en-US", {
       notation: "compact",
@@ -73,6 +76,7 @@ const CovidChart: React.FC = () => {
     label?: string;
   }
 
+   // Custom Tooltip component to display additional information on hover
   const CustomTooltip: React.FC<CustomTooltipProps> = ({
     active,
     payload,
