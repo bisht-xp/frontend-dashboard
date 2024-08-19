@@ -64,6 +64,12 @@ Start the server
 - **Responsive Design**: Fully responsive UI that works seamlessly across all devices, providing a consistent user experience on desktop, tablet, and mobile.
 - **Component Reusability**: The application is built with reusable components, making the codebase more maintainable and reducing redundancy.
 
+## Future Improvements
+
+- **Enhanced Chart Data Handling**: Improve the way data is managed for the x-axis and y-axis in charts, allowing for better accuracy and flexibility. Additionally, enhance the tooltip functionality for a more informative and user-friendly experience.
+- **Dynamic Map Boundaries**: Implement a feature to dynamically adjust the max bounds of the map based on the data displayed, ensuring that the map view is always optimal.
+- **Local State Persistence**: Integrate Redux Persist to store state values locally, allowing for a more seamless user experience by maintaining state across sessions.
+
 ## 🔗 Links
 [![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/bishtkamal)
 [![twitter](https://img.shields.io/badge/twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://x.com/bisht_xp)
