@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import {
-  LineChart,
-  Line,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -9,21 +7,17 @@ import {
   Legend,
   ResponsiveContainer,
   TooltipProps,
+  AreaChart,
+  Area,
 } from "recharts";
 import { useGetChartsData } from "../hooks/covidChartData";
 
 interface ChartData {
-  date: string;
+  year: string;
   cases: number;
   deaths: number;
   recovered: number;
 }
-
-// interface CovidData {
-//   cases: { [date: string]: number };
-//   deaths: { [date: string]: number };
-//   recovered: { [date: string]: number };
-// }
 
 type DataType = "all" | "cases" | "deaths" | "recovered";
 
@@ -39,12 +33,20 @@ const CovidChart: React.FC = () => {
 
   const formatData = (): ChartData[] => {
     if (!data || !data.cases || !data.deaths || !data.recovered) return [];
-    return Object.keys(data.cases).map((date) => ({
-      date: new Date(date).toLocaleDateString(),
-      cases: data.cases[date] || 0,
-      deaths: data.deaths[date] || 0,
-      recovered: data.recovered[date] || 0,
-    }));
+
+    const yearlyData: { [year: string]: ChartData } = {};
+
+    Object.keys(data.cases).forEach((date) => {
+      const year = new Date(date).getFullYear().toString();
+      if (!yearlyData[year]) {
+        yearlyData[year] = { year, cases: 0, deaths: 0, recovered: 0 };
+      }
+      yearlyData[year].cases += data.cases[date] || 0;
+      yearlyData[year].deaths += data.deaths[date] || 0;
+      yearlyData[year].recovered += data.recovered[date] || 0;
+    });
+
+    return Object.values(yearlyData);
   };
 
   const chartData = formatData();
@@ -53,6 +55,7 @@ const CovidChart: React.FC = () => {
     return new Intl.NumberFormat("en-US", {
       notation: "compact",
       compactDisplay: "short",
+      maximumFractionDigits: 1,
     }).format(value);
   };
 
@@ -70,11 +73,15 @@ const CovidChart: React.FC = () => {
     label?: string;
   }
 
-  const CustomTooltip: React.FC<CustomTooltipProps> = ({ active, payload, label }) => {
+  const CustomTooltip: React.FC<CustomTooltipProps> = ({
+    active,
+    payload,
+    label,
+  }) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-gray-800 p-4 rounded shadow-lg">
-          <p className="text-gray-300">{`Date: ${label}`}</p>
+          <p className="text-gray-300">{`Year: ${label}`}</p>
           {payload.map((entry, index) => (
             <p key={index} style={{ color: entry.color }}>
               {`${entry.name}: ${formatTooltipValue(entry.value)}`}
@@ -87,14 +94,18 @@ const CovidChart: React.FC = () => {
   };
 
   if (error) {
-    return <div className="text-red-500">Error loading data: {error.message}</div>;
+    return (
+      <div className="w-full h-[50vh] flex justify-center items-center">
+        <p className="text-red-500">Error loading data: {error.message}</p>
+      </div>
+    );
   }
 
-  if (isLoading) {
-    return <div className="text-gray-300">Loading...</div>;
-  }
-
-  return (
+  return isLoading ? (
+    <div className="w-full h-[50vh] flex justify-center items-center">
+      <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-white border-r-transparent "></div>
+    </div>
+  ) : (
     <div className="p-4 bg-gray-900 rounded-lg shadow-md w-full md:w-[90%]">
       <div className="mb-4">
         <label htmlFor="dataType" className="mr-2 text-gray-300">
@@ -106,7 +117,9 @@ const CovidChart: React.FC = () => {
           onChange={(e) => setSelectedDataType(e.target.value as DataType)}
           className="p-2 border rounded bg-gray-800 text-gray-300 gap-3 "
         >
-          <option className="gap-2" value="all">All</option>
+          <option className="gap-2" value="all">
+            All
+          </option>
           <option value="cases">Cases</option>
           <option value="deaths">Deaths</option>
           <option value="recovered">Recovered</option>
@@ -114,14 +127,14 @@ const CovidChart: React.FC = () => {
       </div>
       <div className="h-[60vh] md:h-[70vh]">
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={chartData}>
+          <AreaChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" stroke="#444" />
             <XAxis
-              dataKey="date"
-              tick={{ fill: "#9CA3AF", fontSize: 10 }}
-              angle={90}
-              textAnchor="start"
-              height={60}
+              dataKey="year"
+              tick={{ fill: "#9CA3AF", fontSize: 12 }}
+              angle={0}
+              textAnchor="middle"
+              height={30}
             />
             <YAxis
               tick={{ fill: "#9CA3AF", fontSize: 10 }}
@@ -130,36 +143,43 @@ const CovidChart: React.FC = () => {
             <Tooltip content={<CustomTooltip />} />
             <Legend wrapperStyle={{ color: "#9CA3AF" }} />
             {(selectedDataType === "all" || selectedDataType === "cases") && (
-              <Line
+              <Area
                 type="monotone"
                 dataKey="cases"
                 stroke={colors.cases}
+                fill={colors.cases}
+                fillOpacity={0.3}
                 strokeWidth={2}
                 dot={false}
                 activeDot={{ r: 8 }}
               />
             )}
             {(selectedDataType === "all" || selectedDataType === "deaths") && (
-              <Line
+              <Area
                 type="monotone"
                 dataKey="deaths"
                 stroke={colors.deaths}
+                fill={colors.deaths}
+                fillOpacity={0.3}
                 strokeWidth={2}
                 dot={false}
                 activeDot={{ r: 8 }}
               />
             )}
-            {(selectedDataType === "all" || selectedDataType === "recovered") && (
-              <Line
+            {(selectedDataType === "all" ||
+              selectedDataType === "recovered") && (
+              <Area
                 type="monotone"
                 dataKey="recovered"
                 stroke={colors.recovered}
+                fill={colors.recovered}
+                fillOpacity={0.3}
                 strokeWidth={2}
                 dot={false}
                 activeDot={{ r: 8 }}
               />
             )}
-          </LineChart>
+          </AreaChart>
         </ResponsiveContainer>
       </div>
     </div>
