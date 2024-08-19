@@ -74,6 +74,7 @@ Start the server
 - **Enhanced Chart Data Handling**: Improve the way data is managed for the x-axis and y-axis in charts, allowing for better accuracy and flexibility. Additionally, enhance the tooltip functionality for a more informative and user-friendly experience.
 - **Dynamic Map Boundaries**: Implement a feature to dynamically adjust the max bounds of the map based on the data displayed, ensuring that the map view is always optimal.
 - **Local State Persistence**: Integrate Redux Persist to store state values locally, allowing for a more seamless user experience by maintaining state across sessions.
+- **Refactor and Optimize CSS**: Improve the CSS by refactoring and creating reusable classes for styles that are used multiple times throughout the application. This will help reduce redundancy, maintain consistency, and make the app more maintainable.
 
 ## 🔗 Links
 [![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/bishtkamal)
