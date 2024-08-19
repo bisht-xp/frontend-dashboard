@@ -29,15 +29,13 @@ const Card: React.FC<CardProps> = ({
         </div>
 
         <div className="flex justify-start items-center">
-          <p className="text-[#98948C] text-sm">Phone:</p>
-
+          <p className="text-[#98948C] text-sm hidden md:block">Phone:</p>
           <p className="text-white text-sm ml-3 overflow-hidden text-ellipsis">
-            {phoneNumber}
+            {`+91 ${phoneNumber}`}
           </p>
         </div>
         <div className="flex justify-start items-center">
-          <p className="text-[#98948C] text-sm">Email:</p>
-
+          <p className="text-[#98948C] text-sm hidden md:block">Email:</p>
           <p className="text-white text-sm ml-3 overflow-hidden text-ellipsis">
             {email}
           </p>
